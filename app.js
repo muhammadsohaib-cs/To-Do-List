@@ -3,18 +3,25 @@ let taskInput = document.getElementById('task-input');
 let addTaskBtn = document.getElementById('add-task-btn');
 
 // Initialize an empty array to store tasks
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
 // Function to add a new task
 function addTask(task) {
     tasks.push(task);
+    saveTasks();
     renderTaskList();
 }
 
 // Function to delete a task
 function deleteTask(index) {
     tasks.splice(index, 1);
+    saveTasks();
     renderTaskList();
+}
+
+// Function to save tasks to local storage
+function saveTasks() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Function to render the task list
@@ -50,3 +57,6 @@ taskInput.addEventListener('keypress', (e) => {
         }
     }
 });
+
+// Initial render of the task list
+renderTaskList();
